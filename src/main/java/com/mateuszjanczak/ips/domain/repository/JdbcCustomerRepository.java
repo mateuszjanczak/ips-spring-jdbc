@@ -29,4 +29,18 @@ public class JdbcCustomerRepository implements CustomerRepository {
         String sql = "SELECT * FROM ips.klient WHERE id_uzytkownika = ?";
         return jdbcTemplate.queryForObject(sql, customerMapper, id);
     }
+
+    @Override
+    public Customer save(Customer customer) {
+
+        int userId = jdbcTemplate.queryForObject("SELECT id_uzytkownika FROM ips.uzytkownik ORDER BY id_uzytkownika DESC LIMIT 1", Integer.class) + 1;
+        String userSql = "INSERT INTO ips.uzytkownik(id_uzytkownika, nazwa_uzytkownika, haslo, email) VALUES(?, ?, ?, ?)";
+        jdbcTemplate.update(userSql, userId, customer.getImie() + userId, customer.getNazwisko() + userId, customer.getNazwisko() + userId + "@gmail.com");
+
+        int customerId = jdbcTemplate.queryForObject("SELECT id_uzytkownika FROM ips.klient ORDER BY id_uzytkownika DESC LIMIT 1", Integer.class) + 1;
+        String sql = "INSERT INTO ips.klient(id_klienta, id_adresu, id_uzytkownika, imie, nazwisko, pesel, telefon) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, userId, 1, customerId, customer.getImie(), customer.getNazwisko(), customer.getPesel(), customer.getTelefon());
+
+        return findById(customerId);
+    }
 }

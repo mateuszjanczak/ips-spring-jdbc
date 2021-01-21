@@ -1,6 +1,7 @@
 package com.mateuszjanczak.ips.domain.mapper;
 
 import com.mateuszjanczak.ips.domain.dto.CustomerDto;
+import com.mateuszjanczak.ips.domain.dto.CustomerRequest;
 import com.mateuszjanczak.ips.domain.entity.Customer;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,27 @@ public class CustomerMapper implements RowMapper<Customer> {
                 .nazwisko(customer.getNazwisko())
                 .pesel(customer.getPesel())
                 .telefon(customer.getTelefon())
+                .build();
+    }
+
+    public static Customer dtoToCustomer(CustomerDto customerDto) {
+
+        return Customer.builder()
+                .id_uzytkownika(customerDto.getId_uzytkownika())
+                .imie(customerDto.getImie())
+                .nazwisko(customerDto.getNazwisko())
+                .pesel(customerDto.getPesel())
+                .telefon(customerDto.getTelefon())
+                .build();
+    }
+
+    public static CustomerDto requestToDto(CustomerRequest customerRequest) {
+
+        return CustomerDto.builder()
+                .imie(customerRequest.getImie())
+                .nazwisko(customerRequest.getNazwisko())
+                .pesel(customerRequest.getPesel())
+                .telefon(customerRequest.getTelefon())
                 .build();
     }
 }
