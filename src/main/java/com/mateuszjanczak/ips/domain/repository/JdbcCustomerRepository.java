@@ -43,4 +43,10 @@ public class JdbcCustomerRepository implements CustomerRepository {
 
         return findById(customerId);
     }
+
+    @Override
+    public List<Customer> findAll(int limit, int offset) {
+        String sql = "SELECT * FROM ips.klient ORDER BY id_uzytkownika LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, customerMapper, limit, limit * offset);
+    }
 }

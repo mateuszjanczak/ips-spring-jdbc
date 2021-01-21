@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("customers")
+@CrossOrigin
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -26,6 +27,13 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public List<CustomerDto> getAllCustomers() {
         return customerService.getAll();
+    }
+
+    @GetMapping("/limit/{limit}/offset/{offset}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public List<CustomerDto> getAllCustomersWithPagination(@PathVariable int limit, @PathVariable int offset) {
+        return customerService.getAll(limit, offset);
     }
 
     @GetMapping("/{id}")

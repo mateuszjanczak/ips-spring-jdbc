@@ -42,4 +42,13 @@ public class CustomerServiceImpl implements CustomerService {
             return Optional.of(CustomerMapper.customerToDto(customer));
         }
     }
+
+    @Override
+    public List<CustomerDto> getAll(int limit, int offset) {
+        List<Customer> customerList = customerRepository.findAll(limit, offset);
+
+        return customerList.stream()
+                .map(CustomerMapper::customerToDto)
+                .collect(Collectors.toList());
+    }
 }

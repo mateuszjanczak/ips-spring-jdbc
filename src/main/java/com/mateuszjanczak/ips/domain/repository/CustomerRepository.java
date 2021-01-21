@@ -10,4 +10,6 @@ public interface CustomerRepository {
     Customer findById(int id);
 
     Customer save(Customer customer);
+
+    List<Customer> findAll(int limit, int offset);
 }
