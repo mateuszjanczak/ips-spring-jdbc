@@ -26,4 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(CustomerMapper::customerToDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CustomerDto getById(int id) {
+        return CustomerMapper.customerToDto(customerRepository.findById(id));
+    }
 }

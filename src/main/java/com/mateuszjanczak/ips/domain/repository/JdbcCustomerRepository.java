@@ -11,16 +11,22 @@ import java.util.List;
 public class JdbcCustomerRepository implements CustomerRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final CustomerMapper customerMapper;
 
-    public JdbcCustomerRepository(JdbcTemplate jdbcTemplate) {
+    public JdbcCustomerRepository(JdbcTemplate jdbcTemplate, CustomerMapper customerMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.customerMapper = customerMapper;
     }
 
     @Override
     public List<Customer> findAll() {
+        String sql = "SELECT * FROM ips.klient ORDER BY id_uzytkownika";
+        return jdbcTemplate.query(sql, customerMapper);
+    }
 
-        String sql = "SELECT * FROM ips.klient";
-
-        return jdbcTemplate.query(sql, (rs, rowNum) -> CustomerMapper.bindCustomer(rs));
+    @Override
+    public Customer findById(int id) {
+        String sql = "SELECT * FROM ips.klient WHERE id_uzytkownika = ?";
+        return jdbcTemplate.queryForObject(sql, customerMapper, id);
     }
 }

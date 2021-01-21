@@ -24,4 +24,10 @@ public class CustomerController {
         return customerService.getAll();
     }
 
+    @GetMapping("/{id}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDto getCustomer(@PathVariable int id) {
+        return customerService.getById(id);
+    }
 }
