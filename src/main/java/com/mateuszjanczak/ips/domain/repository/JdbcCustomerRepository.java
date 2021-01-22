@@ -49,4 +49,10 @@ public class JdbcCustomerRepository implements CustomerRepository {
         String sql = "SELECT * FROM ips.klient ORDER BY id_uzytkownika LIMIT ? OFFSET ?";
         return jdbcTemplate.query(sql, customerMapper, limit, limit * offset);
     }
+
+    @Override
+    public int count() {
+        String sql = "SELECT COUNT(*) FROM ips.klient";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 }

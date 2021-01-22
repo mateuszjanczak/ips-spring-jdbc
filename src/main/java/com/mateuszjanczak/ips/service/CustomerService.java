@@ -1,5 +1,6 @@
 package com.mateuszjanczak.ips.service;
 
+import com.mateuszjanczak.ips.domain.dto.CountDto;
 import com.mateuszjanczak.ips.domain.dto.CustomerDto;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface CustomerService {
     CustomerDto getById(int id);
     Optional<CustomerDto> createCustomer(CustomerDto customerDto);
     List<CustomerDto> getAll(int limit, int offset);
+    CountDto getCount();
 }

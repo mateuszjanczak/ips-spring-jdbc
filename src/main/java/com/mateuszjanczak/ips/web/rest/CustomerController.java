@@ -1,5 +1,6 @@
 package com.mateuszjanczak.ips.web.rest;
 
+import com.mateuszjanczak.ips.domain.dto.CountDto;
 import com.mateuszjanczak.ips.domain.dto.CustomerDto;
 import com.mateuszjanczak.ips.domain.dto.CustomerRequest;
 import com.mateuszjanczak.ips.domain.mapper.CustomerMapper;
@@ -47,6 +48,13 @@ public class CustomerController {
     public ResponseEntity<CustomerDto> saveCustomer(@RequestBody CustomerRequest customerRequest) {
         Optional<CustomerDto> optionalCustomer = customerService.createCustomer(CustomerMapper.requestToDto(customerRequest));
         return optionalCustomer.map(customerDto -> new ResponseEntity<>(customerDto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
+    }
+
+    @GetMapping("/count")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public CountDto getCountCustomers() {
+        return customerService.getCount();
     }
 
     /*@PutMapping

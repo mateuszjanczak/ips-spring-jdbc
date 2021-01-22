@@ -1,5 +1,6 @@
 package com.mateuszjanczak.ips.service;
 
+import com.mateuszjanczak.ips.domain.dto.CountDto;
 import com.mateuszjanczak.ips.domain.dto.CustomerDto;
 import com.mateuszjanczak.ips.domain.entity.Customer;
 import com.mateuszjanczak.ips.domain.mapper.CustomerMapper;
@@ -50,5 +51,10 @@ public class CustomerServiceImpl implements CustomerService {
         return customerList.stream()
                 .map(CustomerMapper::customerToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CountDto getCount() {
+        return new CountDto(customerRepository.count());
     }
 }
