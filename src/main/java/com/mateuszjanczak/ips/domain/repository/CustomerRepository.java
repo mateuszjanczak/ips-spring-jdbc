@@ -14,4 +14,8 @@ public interface CustomerRepository {
     List<Customer> findAll(int limit, int offset);
 
     int count();
+
+    boolean remove(int id);
+
+    Customer update(int id, Customer customer);
 }

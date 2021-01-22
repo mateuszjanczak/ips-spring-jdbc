@@ -40,12 +40,12 @@ public class CustomerController {
     @GetMapping("/{id}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDto getCustomer(@PathVariable int id) {
+    public CustomerDto getCustomerById(@PathVariable int id) {
         return customerService.getById(id);
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> saveCustomer(@RequestBody CustomerRequest customerRequest) {
+    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerRequest customerRequest) {
         Optional<CustomerDto> optionalCustomer = customerService.createCustomer(CustomerMapper.requestToDto(customerRequest));
         return optionalCustomer.map(customerDto -> new ResponseEntity<>(customerDto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
     }
@@ -57,9 +57,23 @@ public class CustomerController {
         return customerService.getCount();
     }
 
-    /*@PutMapping
-    public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerRequest customerRequest) {
-        Optional<CustomerDto> optionalCustomer = customerService.createCustomer(CustomerMapper.requestToDto(customerRequest));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removeCustomer(@PathVariable int id) {
+        if(customerService.removeCustomer(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable int id, @RequestBody CustomerRequest customerRequest) {
+        Optional<CustomerDto> optionalCustomer = customerService.updateCustomer(id, CustomerMapper.requestToDto(customerRequest));
         return optionalCustomer.map(customerDto -> new ResponseEntity<>(customerDto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }*/
+    }
+
+    @GetMapping("/generatePhones")
+    public void generatePhones() {
+        customerService.generate();
+    }
 }

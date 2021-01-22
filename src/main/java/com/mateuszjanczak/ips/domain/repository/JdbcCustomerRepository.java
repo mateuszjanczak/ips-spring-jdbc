@@ -55,4 +55,17 @@ public class JdbcCustomerRepository implements CustomerRepository {
         String sql = "SELECT COUNT(*) FROM ips.klient";
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
+
+    @Override
+    public boolean remove(int id) {
+        String sql = "DELETE FROM ips.klient WHERE id_uzytkownika = ?";
+        return jdbcTemplate.update(sql, id) > 0;
+    }
+
+    @Override
+    public Customer update(int id, Customer customer) {
+        String sql = "UPDATE ips.klient SET imie = ?, nazwisko = ?, pesel  = ?, telefon = ? WHERE id_uzytkownika = ?";
+        jdbcTemplate.update(sql, customer.getImie(), customer.getNazwisko(), customer.getPesel(), customer.getTelefon(), id);
+        return findById(id);
+    }
 }
