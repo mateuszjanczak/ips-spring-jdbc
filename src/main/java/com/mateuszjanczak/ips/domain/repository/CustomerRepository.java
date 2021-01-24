@@ -11,7 +11,7 @@ public interface CustomerRepository {
 
     Customer save(Customer customer);
 
-    List<Customer> findAll(int limit, int offset);
+    List<Customer> findAll(int limit, int page);
 
     int count();
 

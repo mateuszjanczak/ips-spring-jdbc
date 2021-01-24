@@ -10,7 +10,7 @@ public interface CustomerService {
     List<CustomerDto> getAll();
     CustomerDto getById(int id);
     Optional<CustomerDto> createCustomer(CustomerDto customerDto);
-    List<CustomerDto> getAll(int limit, int offset);
+    List<CustomerDto> getAll(int limit, int page);
     CountDto getCount();
     boolean removeCustomer(int id);
     Optional<CustomerDto> updateCustomer(int id, CustomerDto customerDto);

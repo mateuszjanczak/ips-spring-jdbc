@@ -30,11 +30,11 @@ public class CustomerController {
         return customerService.getAll();
     }
 
-    @GetMapping("/limit/{limit}/offset/{offset}")
+    @GetMapping("/limit/{limit}/page/{page}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<CustomerDto> getAllCustomersWithPagination(@PathVariable int limit, @PathVariable int offset) {
-        return customerService.getAll(limit, offset);
+    public List<CustomerDto> getAllCustomersWithPagination(@PathVariable int limit, @PathVariable int page) {
+        return customerService.getAll(limit, page);
     }
 
     @GetMapping("/{id}")

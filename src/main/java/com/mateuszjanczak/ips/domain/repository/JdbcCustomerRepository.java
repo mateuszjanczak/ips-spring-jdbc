@@ -45,9 +45,9 @@ public class JdbcCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public List<Customer> findAll(int limit, int offset) {
+    public List<Customer> findAll(int limit, int page) {
         String sql = "SELECT * FROM ips.klient ORDER BY id_uzytkownika LIMIT ? OFFSET ?";
-        return jdbcTemplate.query(sql, customerMapper, limit, limit * offset);
+        return jdbcTemplate.query(sql, customerMapper, limit, limit * page);
     }
 
     @Override
