@@ -4,6 +4,8 @@ import com.mateuszjanczak.ips.domain.entity.Customer;
 import com.mateuszjanczak.ips.domain.mapper.CustomerMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Customer save(Customer customer) {
 
         int userId = jdbcTemplate.queryForObject("SELECT id_uzytkownika FROM ips.uzytkownik ORDER BY id_uzytkownika DESC LIMIT 1", Integer.class) + 1;
